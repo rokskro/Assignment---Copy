@@ -1,0 +1,51 @@
+@model RecipeSearchViewModel
+
+<partial name="_Breadcrumbs" model=@(new [] {
+    ("/", "Home"),
+    ("", "Recipes")
+}) />
+
+
+<div class="container ">
+  <div class="row">
+    <div class="col-10">
+        <h3>Recipes</h3>
+    </div>
+    <div class="col-2">
+      <a asp-condition=@User.HasOneOfRoles("admin") asp-action="Create" class="btn btn-warning text-decoration-none btn-sm mb-2" aria-label="create recipe" role="button">
+        <i class="bi bi-journal-plus"></i>
+        <span class="ms-1 d-none d-md-inline">Add Recipe</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<hr class="solid">
+
+<!-- Search -->
+<partial name ="_Search"/>
+
+
+
+
+<!-- recipe cards-->
+<div class="row row-cols-1 row-cols-md-5 g-4">
+  @foreach(var r in Model.Recipes)
+  {
+    <div class ="col">
+      <div class="card border-dark" style="width: 14rem;">
+        <img src="@r.ImageUrl" class="card-img-top" height="230px" >
+        <div class="card-body"> 
+          <a class = "link-dark text-decoration-none" asp-action="Details" asp-route-id=@r.Id>
+          <h5 class="card-title">@r.Name</h5>
+          </a>
+          <small class="text-muted">@r.Cuisine | @r.Diet</small>
+          <p class="card-text">@r.FlavourTxt</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">Difficulty: @r.DiffRating</small>
+        </div>
+      </div>
+    </div>
+  }
+</div>

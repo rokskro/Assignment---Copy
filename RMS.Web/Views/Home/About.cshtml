@@ -1,0 +1,24 @@
+@model AboutViewModel
+
+
+<div class="d-flex justify-content-center"> 
+    <div class="card text-center shadow" style ="width: 25rem;">
+        <div class="card-header bg-warning">
+            <h2 class="text-light">@Model.Title</h2>
+        </div>
+        <div class="card-body">
+            <!-- Small Image-->
+            <div class="d-flex justify-content-center">   
+                <img src="https://media.istockphoto.com/id/1093751296/vector/cartoon-fried-egg-on-skillet.jpg?s=612x612&w=0&k=20&c=G1AzaeWc7456KjiaxfkYWlDHN2mV5fmoGQYH9KObBZ0=" class="img" width="120">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title text-dark">Our Mission Statement</h5>
+                <p><em>@Model.Message</em></p>
+            </div>
+            <p class="text-muted text-sm">This web application was made as part of the COM741 module assessment</p>
+            <div class="card-footer text-muted">
+                <div>Formed on @Model.FormedString <cite title="Source Title">(@Model.Days days ago)</cite></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+@model UserRegisterViewModel
+
+
+<div class="d-flex justify-content-center">
+    <div class="card shadow rounded p-4 align-items-center" style ="width: 28rem;">
+    
+        <div class="card-body"></div>
+            <h3 class="mb-3 text-center">Register</h3>
+
+            <form asp-action="Register" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="input-group mb-3 justify-content-center">
+                    <span class="input-group-text" id="name-icon">
+                        <i class="bi bi-brush"></i>
+                    </span>
+                    <input asp-for="Name" class="form-control" placeholder="Name" aria-label="Name" aria-describedby="name-icon">
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+
+                <div class="input-group mb-3 justify-content-center">
+                    <span class="input-group-text" id="email-icon">
+                        <i class="bi bi-envelope"></i>
+                    </span>
+                    <input asp-for="Email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-icon">
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+                <div class="input-group mb-3 justify-content-center">
+                    <span class="input-group-text" id="login-icon">
+                        <i class="bi bi-key"></i>
+                    </span>
+                    <input type="password" asp-for="Password" placeholder="Password" aria-label="Password" class="form-control" aria-describedby="login-icon" />  
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <div class="input-group mb-3 justify-content-center">
+                    <span class="input-group-text" id="confirm-icon">
+                        <i class="bi bi-check2"></i>
+                    </span>
+                    <input type="password" asp-for="PasswordConfirm" placeholder="Confirm Password" aria-label="Password Confirm" class="form-control" aria-describedby="confirm-icon" />
+                </div>
+                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+
+                <div class="input-group mb-3 justify-content-center">
+                <!-- Html.GetEnumSelectList<T>() is used to create a select list from the enum type (T) passed as a type parameter -->
+                    <span class="input-group-text" id="role-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </span>
+                    <select asp-for="Role" asp-items="Html.GetEnumSelectList<Role>()" class="form-control" aria-label="Select Role" aria-describedby="role-icon">                
+                        <option disabled selected>Select Role</option>
+                    </select>
+                </div>
+                <span asp-validation-for="Role" class="text-danger"></span>
+
+                <div class="d-flex justify-content-center">
+                    <div class="mt-1">
+                        <input type="submit" value="Register" class="btn btn-warning" />
+                        <a class="btn btn-dark" asp-controller="Home" asp-action="Index">Cancel</a>
+                    </div>
+                </div>
+                <p class="text-sm-center"> 
+                    Already have a account? <a asp-controller="User" asp-action="Login">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

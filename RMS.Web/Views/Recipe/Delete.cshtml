@@ -1,0 +1,39 @@
+@model Recipe
+
+<partial name="_BreadCrumbs" model=@(new [] {
+    ("/", "Home"),
+    ("/recipe", "Recipes"),
+    ($"/recipe/details/{Model.Id}", $"{Model.Id}"),
+    ("","Delete")
+}) />
+
+
+<div class="d-flex justify-content-center">
+
+    <div class="card rounded shadow p-4 align-items-center" style ="width: 25rem;">
+        <div class="card-body">
+            <div class="d-flex justify-content-center ">
+                <div class="spinner-border text-danger" role="status">
+                <span class="visually-hidden">Loading...</span>
+                </div>
+                <h3>Deleting Recipe...</h3>
+            </div>
+            
+            <p class="text-sm-center"> You are about to delete the following recipe:</p>
+            <div class="card bg-light">
+                <p class="text-sm-center fw-bold"> @Model.Name </p>
+                <p class="text-sm-center"> @Model.FlavourTxt</p>
+            </div>
+            <p class="text-danger text-sm-center">Are you sure?</p>
+  
+    <!-- form to submit post request to DeleteConfirm action     --> 
+            <div class="d-flex justify-content-center">
+                <form asp-action="DeleteConfirm" asp-route-id="@Model.Id">
+                    <input type="hidden" asp-for="Id" class="form-control"/>
+                    <button type="submit" class="btn btn-danger" aria-label="delete">Delete!</button>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@Model.Id" >Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>  
+</div>

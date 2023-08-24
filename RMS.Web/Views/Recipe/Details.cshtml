@@ -1,0 +1,118 @@
+@model Recipe
+
+
+
+<partial name="_Breadcrumbs" model=@(new [] {
+    ("/", "Home"),
+    ("/recipe", "Recipes"),
+    ("", $"{Model.Id}")
+})/>
+
+
+<div class="card rounded shadow p-4">
+    <!-- Display details -->
+    <div class="row">
+        
+        <!-- Photo -->
+        <div class="col-4">
+            @if (Model.ImageUrl?.Length > 0)
+            {
+                <img src="@Model.ImageUrl" class="img-fluid rounded" height="500px" alt="recipe photo">
+            } else {
+                <span class="text-info">No photo available</span>
+            }
+        </div>
+
+        <!-- Details and Navigation -->
+        <div class="col-8  ">
+
+            <!-- Recipe details -->
+            <div>
+                <div class="conatiner">
+                    <div class="row">
+                        <div class="col">
+                            <h2 class="mb-1 text-dark">@Model.Name
+                            
+                            <!-- Recipe rating  -->
+                                
+                                @if (@Model.Reviews.Count == 0 ) {
+                                    <h5 class="mb-1 text-warning"> 0
+                                        <i class="bi bi-star-fill"></i>
+                                    </h5> 
+                                }
+                                else {   
+                                    <h5 class="mb-1 text-warning"> @Model.Reviews.Average(r => r.Rating)
+                                        <i class="bi bi-star-fill"></i>
+                                    </h5>
+                                }
+                                
+                            </h2>
+                        </div>
+                        <div class="col-2">
+                           <!-- Edit & delete recipe -->
+                        <a asp-condition=@User.HasOneOfRoles("admin") asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary btn-sm " aria-label="edit recipe" role="button">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a asp-condition=@User.HasOneOfRoles("admin") asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-sm " aria-label="delete recipe" role="button">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- recipe difficulty -->
+                <h6 class="text-muted">
+                    @if(Model.Difficulty == 1){
+                        <p> Difficulty: Easy <i class="bi bi-egg-fried"></i>
+                        </p>
+                    }
+                    else if(Model.Difficulty == 2){
+                        <p> Difficulty: Medium <i class="bi bi-egg-fried"></i><i class="bi bi-egg-fried"></i>
+                        </p>
+                    }
+                    else{
+                        <p> Difficulty: Hard <i class="bi bi-egg-fried"></i><i class="bi bi-egg-fried"></i><i class="bi bi-egg-fried"></i>
+                        </p>
+                    }
+                </h6>
+                <h6 class="text-muted">
+                    <i class="bi bi-stopwatch"></i>
+                    Cooking time : @Model.CookTime min</h6>
+                <p>@Model.FlavourTxt</p>
+
+                <!-- Ingredients & Instructions -->
+                <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Ingredients
+                                </button>
+                            </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                @Model.Ingredients
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Cooking Instructions
+                            </button>
+                        </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @Model.Instructions
+                        </div>
+                    </div>  
+                </div> 
+            </div>
+        </div>
+    </div>    
+</div>
+
+<!-- Reviews -->
+<partial name="_Reviews" />
+
+
+
+
